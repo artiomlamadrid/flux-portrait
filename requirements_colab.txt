@@ -1,0 +1,3 @@
+# Colab (GPU) dependencies — training and generation.
+# Placeholder: filled in when the training launcher and generation script
+# are built (torch, transformers, diffusers, peft, Kohya_ss sd-scripts, etc.).

@@ -216,3 +216,21 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# flux-portrait project data (personal photos / model weights / generated output)
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+models/base/*
+models/lora/*
+!models/base/.gitkeep
+!models/lora/.gitkeep
+
+output/dating/*
+output/linkedin/*
+output/raw/*
+!output/dating/.gitkeep
+!output/linkedin/.gitkeep
+!output/raw/.gitkeep

@@ -1,0 +1,24 @@
+# Local (CPU) dependencies — dev machine, data prep only.
+# No diffusers/peft/Kohya_ss here: LoRA training and Flux generation run on
+# Colab instead (see requirements_colab.txt). torch/transformers below are
+# CPU-only, used solely for Florence-2 captioning in prepare_data.py.
+pillow
+numpy
+opencv-python
+insightface
+onnxruntime
+imagehash
+python-dotenv
+pyyaml
+toml
+tqdm
+
+# Florence-2 captioning (CPU on macOS; the default PyPI torch wheel has no
+# CUDA variant for macOS, so this stays CPU-only here without pinning an
+# index. Reusing this file on Linux would pull the CUDA build instead.)
+# transformers pinned: newer major versions (5.x) break Florence-2's
+# trust_remote_code config loading (AttributeError on forced_bos_token_id).
+torch==2.13.0
+transformers==4.49.0
+einops
+timm
