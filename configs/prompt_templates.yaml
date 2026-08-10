@@ -1,0 +1,30 @@
+# Starting-point prompts for generation, keyed by use case.
+#
+# Reference copy for readability/version-control — notebooks/03_generate.ipynb
+# embeds an editable copy of these directly in its generation cell (Colab
+# needs a self-contained notebook, and prompts get iterated on live far more
+# than re-uploaded). If you change one here, update it there too if you want
+# the notebook's starting default to match.
+#
+# All prompts are prefixed with the trigger phrase baked into training
+# captions by scripts/prepare_data.py ("a photo of ohwx man, ").
+
+dating_casual:
+  - "a photo of ohwx man sitting on a boat deck at golden hour, relaxed smile, navy casual shirt, candid"
+  - "a photo of ohwx man at an outdoor cafe, coffee on table, warm afternoon light, natural expression"
+  - "a photo of ohwx man hiking on a mountain trail, scenic background, casual outdoors clothing"
+  - "a photo of ohwx man laughing at a rooftop bar, city lights behind, evening, social setting"
+
+dating_active:
+  - "a photo of ohwx man on a sailboat, hands on wheel, ocean background, confident expression"
+  - "a photo of ohwx man kayaking on a lake, action shot, summer, athletic"
+  - "a photo of ohwx man at a beach, casual summer outfit, natural candid moment"
+
+linkedin_professional:
+  - "a professional headshot of ohwx man, neutral background, business casual, soft studio lighting, direct eye contact"
+  - "a photo of ohwx man in a modern office environment, confident posture, professional attire"
+  - "a photo of ohwx man presenting at a whiteboard, engaged expression, business setting"
+
+# Only has an effect in the notebook if true_cfg_scale is raised above its
+# default of 1.0 — see notebooks/03_generate.ipynb for why.
+negative_prompt: "cartoon, illustration, painting, drawing, anime, render, deformed, ugly, blurry, low quality, watermark, text, logo, bad anatomy, extra fingers, mutated hands, poorly drawn face, bad proportions, gross proportions"

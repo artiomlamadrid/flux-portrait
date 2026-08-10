@@ -1,0 +1,54 @@
+# Flux.1 LoRA training hyperparameters for flux-portrait.
+#
+# This is a reference copy for readability/version-control — the actual
+# training run happens in notebooks/02_train_lora.ipynb, which embeds these
+# same values directly (Colab needs a self-contained notebook; see that
+# file's setup cell). If you change a value here, update it there too.
+#
+# Model file paths, dataset directory, and output directory are NOT listed
+# here: those are Colab-session-specific (/content/...) and are resolved at
+# runtime by the notebook, not committed to this repo.
+
+[network]
+module = "networks.lora_flux"
+dim = 16
+alpha = 16
+train_unet_only = true  # Flux LoRA: train the transformer, not the text encoders
+
+[training]
+learning_rate = 5e-5
+optimizer_type = "AdamW8bit"  # 8-bit Adam: lower VRAM than full-precision AdamW
+lr_scheduler = "cosine_with_restarts"
+lr_warmup_steps = 100
+max_train_steps = 1500          # Start here; 1000-2000 is typical for a face LoRA
+save_every_n_steps = 250        # Checkpoint periodically to compare quality
+mixed_precision = "bf16"
+save_precision = "bf16"
+gradient_checkpointing = true
+sdpa = true                     # Scaled dot-product attention
+
+# Flux-specific (required for correct Flux training behavior, not optional
+# tuning knobs): see docs/flux_train_network.md in kohya-ss/sd-scripts.
+[flux]
+guidance_scale = 1.0            # Disabled during training (Flux is guidance-distilled)
+timestep_sampling = "flux_shift"
+model_prediction_type = "raw"
+cache_latents = true
+cache_text_encoder_outputs = true  # Safe since captions aren't shuffled/dropped per-step
+
+# VRAM-saving flags: enable on a ~24GB GPU (e.g. Colab L4), leave off on a
+# ~40GB GPU (e.g. Colab A100), which has headroom to spare.
+[flux.low_vram]
+fp8_base = true
+blocks_to_swap = 18
+
+[dataset]
+resolution = 1024               # Matches prepare_data.py's fixed output size
+batch_size = 1
+enable_bucket = false           # All images already uniform 1024x1024, no AR variety
+flip_aug = true                 # Fight overfitting on a small (~17-image) dataset
+caption_extension = ".txt"
+shuffle_caption = false         # Captions are natural-language sentences, not tag lists
+
+# Trigger phrase is baked into every caption by scripts/prepare_data.py
+# (default: "a photo of ohwx man, "), not set here.
